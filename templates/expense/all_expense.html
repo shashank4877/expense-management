@@ -1,0 +1,177 @@
+{% include 'header.html' %}
+{% include 'sidebar.html' %}
+{% load staticfiles i18n %}
+{% load rest_framework %}
+{% spaceless %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Expense List</h4>
+                             <td colspan="2">
+                                                    <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-expense">Add New Expense</button>
+                                                </td>
+                                <h6 class="card-subtitle"></h6>
+                                <div class="table-responsive">
+                                    <table id="expense-list" class="tablesorter table m-t-30 table-hover contact-list  " data-page-size="10">
+                                        <thead>
+                                            <tr>
+                                                <th class="footable-sortable">No </th>
+                                                <th>Category</th>
+                                                <th>Expense Date</th>
+                                                <th>Details</th>
+                                                <th>Expense Bill Copy</th>
+                                                <th>Total Amount</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-expense">Add New Expense</button>
+                                                </td>
+                                                <div id="add-expense" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                <br>
+                                                                <h4 class="modal-title" id="myModalLabel">Add New Expense</h4> </div>
+                                                            <div class="modal-body">
+                                                                <form class="form-horizontal form-material" enctype="multipart/form-data" method="post" action="/add-expense/">
+                                                                {% csrf_token %}
+
+                                                                    <div class="form-group">
+                                                                                                            {% for field in form %}
+
+                                                                        <div class="col-md-12 m-b-20">
+                                                                            <label class="control-label">{{ field.label_tag }}{% if field.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                                                                            {{ field }}
+                                                                             </div>
+{% endfor %}
+{#                                                                        <div class="col-md-12 m-b-20">#}
+{#                                                                            <div class="fileupload btn btn-danger btn-rounded waves-effect waves-light"><span><i class="ion-upload m-r-5"></i>Upload Contact Image</span>#}
+{#                                                                                <input type="file" class="upload"> </div>#}
+{#                                                                        </div>#}
+                                                                    </div>
+                                                                  <div class="form-actions">
+                                        <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+                                                                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                                                            </div>
+                                                                </form>
+                                                            </div>
+
+                                                        </div>
+                                                        <!-- /.modal-content -->
+                                                    </div>
+                                                    <!-- /.modal-dialog -->
+                                                </div>
+                                            <div id="add-expense" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                <br>
+                                                                <h4 class="modal-title" id="myModalLabel">Add New Expense</h4> </div>
+                                                            <div class="modal-body">
+                                                                <form class="form-horizontal form-material" enctype="multipart/form-data" method="post" action="/add-expense/">
+                                                                {% csrf_token %}
+
+                                                                    <div class="form-group">
+                                                                                                            {% for field in form %}
+
+                                                                        <div class="col-md-12 m-b-20">
+                                                                            <label class="control-label">{{ field.label_tag }}{% if field.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                                                                            {{ field }}
+                                                                             </div>
+{% endfor %}
+{#                                                                        <div class="col-md-12 m-b-20">#}
+{#                                                                            <div class="fileupload btn btn-danger btn-rounded waves-effect waves-light"><span><i class="ion-upload m-r-5"></i>Upload Contact Image</span>#}
+{#                                                                                <input type="file" class="upload"> </div>#}
+{#                                                                        </div>#}
+                                                                    </div>
+                                                                  <div class="form-actions">
+                                        <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+                                                                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                                                            </div>
+                                                                </form>
+                                                            </div>
+
+                                                        </div>
+                                                        <!-- /.modal-content -->
+                                                    </div>
+                                                    <!-- /.modal-dialog -->
+                                                </div>
+                                            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <h4 class="text-center">Are you sure you want to delete this ?</h4>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <form id ='expensedelete' class="button-form" action="/v1/expense/8/" method="post">{% csrf_token %}
+                      <input type="hidden" name="_method" value="DELETE">
+
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+{#                                             <div id="edit-expense" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">#}
+{#                                                    <div class="modal-dialog">#}
+{#                                                        <div class="modal-content">#}
+{#                                                            <div class="modal-header">#}
+{#                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>#}
+{#                                                                <br>#}
+{#                                                                <h4 class="modal-title" id="myModalLabel">Edit Expense</h4> </div>#}
+{#                                                            <div class="modal-body">#}
+{#                                                                <form class="form-horizontal form-material" enctype="multipart/form-data" data-method="PUT" action="/v1/expense/">#}
+{#                                                                {% csrf_token %}#}
+{##}
+{#                                                                    <div class="form-group">#}
+{#                                                                                                            {% for field in form %}#}
+{##}
+{#                                                                        <div class="col-md-12 m-b-20">#}
+{#                                                                            <label class="control-label">{{ field.label_tag }}{% if field.field.required %}<span class="text-danger">*</span>{% endif %}</label>#}
+{#                                                                            {{ field }}#}
+{#                                                                             </div>#}
+{#{% endfor %}#}
+{#                                                                        <div class="col-md-12 m-b-20">#}
+{#                                                                            <div class="fileupload btn btn-danger btn-rounded waves-effect waves-light"><span><i class="ion-upload m-r-5"></i>Upload Contact Image</span>#}
+{#                                                                                <input type="file" class="upload"> </div>#}
+{#                                                                        </div>#}
+{#                                                                    </div>#}
+{#                                                                  <div class="form-actions">#}
+{#                                        <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>#}
+{#                                                                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>#}
+{#                                                            </div>#}
+{#                                                                </form>#}
+{#                                                            </div>#}
+{##}
+{#                                                        </div>#}
+{#                                                        <!-- /.modal-content -->#}
+{#                                                    </div>#}
+{#                                                    <!-- /.modal-dialog -->#}
+{#                                                </div>#}
+
+{#                                                <td colspan="7">#}
+{#                                                    <div class="text-right">#}
+{#                                                        <ul class="pagination"> </ul>#}
+{#                                                    </div>#}
+{#                                                </td>#}
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+{% include 'footer.html' %}
+                    {% endspaceless %}

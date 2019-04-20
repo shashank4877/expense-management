@@ -1,0 +1,9 @@
+.pyc
+migrations/
+settings.py
+.idea/
+.hg/
+media/
+.hgignore
+.hg/
+

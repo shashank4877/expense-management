@@ -1,0 +1,9 @@
+{% include 'header.html' %}
+
+{% block body %}
+	{% if not user.is_authenticated %}
+        {%  include 'accounts/login.html' %}
+    {% else %}
+        {% include 'accounts/profile.html' %}
+    {% endif %}
+{% endblock %}

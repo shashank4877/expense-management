@@ -1,0 +1,103 @@
+{% include 'header.html' %}
+{% include 'sidebar.html' %}
+{% load staticfiles i18n %}
+
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- Row -->
+          <div class="col-lg-6">
+                        <!-- Row -->
+                        <div class="row">
+                            <!-- Column -->
+                            <div class="col-sm-6">
+                                <div class="card card-body">
+                                    <!-- Row -->
+                                    <div class="row p-t-10 p-b-10">
+                                        <!-- Column -->
+                                        <div class="col p-r-0">
+                                            <h1 class="font-light">{{ request.user.get_total_spent }}</h1>
+                                            <h6 class="text-muted">Total Spent</h6></div>
+                                        <!-- Column -->
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Column -->
+                            <div class="col-sm-6">
+                                <div class="card card-body">
+                                    <!-- Row -->
+                                    <div class="row p-t-10 p-b-10">
+                                        <!-- Column -->
+                                        <div class="col p-r-0">
+                                            <h1 class="font-light">{{ request.user.get_today_spent }}</h1>
+                                            <h6 class="text-muted">Today Spent</h6></div>
+                                        <!-- Column -->
+
+                                    </div>
+                                </div>
+                            </div>
+                                                        {% for category in request.user.profile_data %}
+
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ category.category }}</h4>
+{#                                <h6 class="card-subtitle">{{ category.category }}</h6>#}
+                                <div class="row m-t-40">
+
+                                  </div>
+                </div>
+                </div>
+                </div>
+                    <!-- Column -->
+                                                                                {% for sub_category in category.value %}
+
+                            <!-- Column -->
+                            <div class="col-sm-6">
+                                <div class="card card-body">
+                                    <!-- Row -->
+                                    <div class="row p-t-10 p-b-10">
+                                        <!-- Column -->
+                                        <div class="col p-r-0">
+                                            <h1 class="font-light">{{ sub_category.total_spent }} </h1>
+                                            <h6 class="text-muted">{{ sub_category.category }}</h6></div>
+                                        <!-- Column -->
+                                        <div class="col text-right align-self-center">
+{#                                            <div data-label="40%" class="css-bar m-b-0 css-bar-warning css-bar-40"><i class="mdi mdi-star-circle"></i></div>#}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                                                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+         <!-- Column -->
+
+{#                            {% for category in category_details %}#}
+{#                            <!-- Column -->#}
+{#                            <div class="col-sm-6">#}
+{#                                <div class="card card-body">#}
+{#                                    <!-- Row -->#}
+{#                                    <div class="row p-t-10 p-b-10">#}
+{#                                        <!-- Column -->#}
+{#                                        <div class="col p-r-0">#}
+{#                                            <h1 class="font-light">{{ category.total_spent }} </h1>#}
+{#                                            <h6 class="text-muted">{{ category.category }}</h6></div>#}
+{#                                        <!-- Column -->#}
+{#                                        <div class="col text-right align-self-center">#}
+{#                                            <div data-label="40%" class="css-bar m-b-0 css-bar-warning css-bar-40"><i class="mdi mdi-star-circle"></i></div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            {% endfor %}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+
+
+{% include 'footer.html' %}

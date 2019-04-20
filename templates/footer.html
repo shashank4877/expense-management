@@ -1,0 +1,128 @@
+ {% load staticfiles i18n %}
+
+            <!-- footer -->
+            <!-- ============================================================== -->
+{#            <footer class="footer">#}
+{#            </footer>#}
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+
+    <script src="{% static 'assets/plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="{% static 'assets/plugins/bootstrap/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="{% static 'js/jquery.slimscroll.js' %}"></script>
+    <!--Wave Effects -->
+    <script src="{% static 'js/waves.js' %}"></script>
+    <!--Menu sidebar -->
+    <script src="{% static 'js/sidebarmenu.js' %}"></script>
+    <!--stickey kit -->
+    <script src="{% static 'assets/plugins/sticky-kit-master/dist/sticky-kit.min.js' %}"></script>
+    <!--Custom JavaScript -->
+    <script src="{% static 'js/custom.min.js' %}"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!-- chartist chart -->
+    <script src="{% static 'assets/plugins/chartist-js/dist/chartist.min.js' %}"></script>
+
+    <script src="{% static 'assets/plugins/dropify/dist/js /dropify.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js' %}"></script>
+    <!-- Chart JS -->
+    <script src="{% static 'assets/plugins/echarts/echarts-all.js' %}"></script>
+    <script src="{% static 'js/dashboard5.js' %}"></script>
+
+     <!-- Footable -->
+    <script src="{% static 'assets/plugins/footable/js/footable.all.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/bootstrap-select/bootstrap-select.min.js' %}"></script>
+    <!--FooTable init-->
+    <script src="{% static 'js/footable-init.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
+
+    <!-- ============================================================== -->
+    <!-- Style switcher -->
+    <!-- ============================================================== -->
+    <script src="https://mottie.github.io/tablesorter/js/jquery.tablesorter.js"></script>
+    <script src="https://mottie.github.io/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+    <script src="{% static 'assets/plugins/styleswitcher/jQuery.style.switcher.js' %}"></script>
+         <script>$(document).ready(function(){
+            $.ajax({ url: "/v1/expense.json/",
+              dataType: "json",
+              context: document.body,
+                success: function(data){
+                    var counter = 1;
+
+                    var tbody = $("<tbody />"),tr;
+                    $.each(data,function(_,obj) {
+                        tr = $("<tr />");
+                        tr.append("<td>"+counter+"</td>")
+                        $.each(obj,function(_,value) {
+                            if (_ ==='id'){
+                        {#edit_button = '<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Edit"><i class="ti-pencil" aria-hidden="true"></i></button>'#}
+                        edit_button = "<a href="+"/edit-expense/"+value+" target=\"_blank\"  >"+"Edit  Expense"+"</a>"
+                        {#delete_button = "<button class=\"btn btn-danger button-form js-tooltip\" title=\"Make a DELETE request on the"+value+" resource\" data-toggle=\"modal\" data-target=\"#deleteModal\">DELETE</button>\n"#}
+                        delete_button = '<input type="button"  value="Delete" data="'+value+'" onclick="delete_data('+value+')">'
+                            }
+                            else if (_ === 'expense_bill_copy')
+                            {
+                                tr.append("<td>"+"<a href="+value+" target=\"_blank\">"+"View Bill"+"</a>"+"</td>")
+
+                            }
+                            else{
+                                tr.append("<td>"+value+"</td>")
+                            }
+                    });
+                        tr.append("<td>"+edit_button+"</td>")
+                        tr.append("<td>"+delete_button+"</td>")
+
+                        counter++;
+                    tr.appendTo(tbody);
+                    });
+  tbody.appendTo("#expense-list");
+        }});
+});
+</script>
+<script>
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+
+function delete_data(val){
+$.ajax({
+    type: "DELETE",
+    url: '/v1/expense/'+val+'/',
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    },
+    success: function() { window.location.reload();},
+});}
+</script>
+</body>
+
+</html>
