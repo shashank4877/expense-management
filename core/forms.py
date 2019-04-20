@@ -1,15 +1,20 @@
 import datetime
 
-from django.forms import Form, fields
+from django.forms import fields
 from django import forms
 from django.forms import ModelForm
-from .models import Expense, ExpenseCategory
+from .models import Expense
 
 
 class ExpenseAddForm(ModelForm):
-    expense_date =fields.DateField(initial=datetime.date.today,widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    """
+    Expense Model form is used here for passing custom css classes to template.
+
+    """
+    expense_date = fields.DateField(initial=datetime.date.today,
+                                    widget=forms.widgets.DateInput(attrs={'type': 'date'}))
     description = forms.CharField(widget=forms.Textarea(attrs={'rows': 2, 'cols': 20}))
-    total_amount = forms.DecimalField( decimal_places=2, max_digits=12, min_value=0.01)
+    total_amount = forms.DecimalField(decimal_places=2, max_digits=12, min_value=0.01)
 
 
     def __init__(self, *args, **kwargs):
@@ -26,3 +31,4 @@ class ExpenseAddForm(ModelForm):
         model = Expense
         fields = '__all__'
         exclude = ('user',)
+

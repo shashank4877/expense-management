@@ -32,7 +32,6 @@ class User(AbstractUser):
 
     def profile_data(self):
         all_category = ExpenseCategory.objects.all()
-        # main = {}
         category_details = []
         for category in all_category:
             sub_category_details = {}
@@ -56,14 +55,14 @@ class ExpenseCategory(models.Model):
 
 
 class ExpenseSubCategory(models.Model):
-    expense_category = models.ForeignKey(ExpenseCategory,on_delete=models.CASCADE)
+    expense_category = models.ForeignKey(ExpenseCategory, on_delete=models.CASCADE)
     title = models.CharField(max_length=15)
     logo = models.FileField()
 
     def __str__(self):
         return self.title
 
-    def get_category_spent(self,user):
+    def get_category_spent(self, user):
         try:
             total = 0
             for expense in self.expense_set.all().filter(user=user):
@@ -77,15 +76,14 @@ class Expense(models.Model):
     user = UserForeignKey(auto_user_add=True,)
     category = models.ForeignKey(ExpenseSubCategory, on_delete=models.CASCADE)
     expense_date = models.DateField()
-    description = models.TextField(null=True,blank=True)
-    expense_bill_copy = models.FileField(null=True,blank=True)
+    description = models.TextField(null=True, blank=True)
+    expense_bill_copy = models.FileField(null=True, blank=True)
     total_amount = models.DecimalField(decimal_places=2, max_digits=12)
-
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-            return self.user.first_name +''+self.category.title + ' ' + str(self.total_amount)
+        return self.user.first_name + '-' + self.category.title + '-' + str(self.total_amount)
 
 
 

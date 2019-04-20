@@ -7,7 +7,7 @@ from .forms import ExpenseAddForm
 class ExpenseSubCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ExpenseSubCategory
-        exclude= ('logo')
+        exclude = ('logo')
 
 
 
@@ -31,3 +31,4 @@ class AddExpenseSerializer(serializers.ModelSerializer):
         rep = super(AddExpenseSerializer, self).to_representation(instance)
         rep['category'] = instance.category.title
         return rep
+
